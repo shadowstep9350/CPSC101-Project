@@ -6,7 +6,7 @@
 *@version 1.00
 */
 
-
+//test
 public class Lecture
 {
 	private ArrayList<Meeting> meetingList;
