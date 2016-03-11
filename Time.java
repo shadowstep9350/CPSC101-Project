@@ -2,9 +2,9 @@
 * Class that makes sure that the class time and duration make sense and creates an object with the times as variables.
 *
 * @author Duncan Render
-* @version 1.01
+* @version 2.00
 */
-package cpsc101.highoctane.model;
+//package cpsc101.highoctane.model;
 import java.text.*;
 
 public class Time
@@ -20,7 +20,7 @@ public class Time
 	private int End_Time; //Time that class ends.
 	private String Meet_Time; //We can use the decimal format to make the start time into a string.
 	private String End_of_Class; //Makes a string for the time that class ends, in case we want to show it somewhere.
-	private boolean created = false;
+	//private boolean created = false;
 	
 	/**
 	* The constructor for the class object.
@@ -45,16 +45,14 @@ public class Time
 	{
 		symbols.setGroupingSeparator(':');
 		cf.setDecimalFormatSymbols(symbols);
-		setHours(theStartHour);
 		setMinutes(theStartMinute);
-		setDurationHours(theDurationHour);
+		setHours(theStartHour);
 		setDurationMinutes(theDurationMinute);
+		setDurationHours(theDurationHour);
 		setStart();
 		setEnd();
 		setMeetTime();
 		setEndofClass();
-		validTimes();
-		created = true;
 	}
 	
 	//Here are the standard getters.
@@ -65,7 +63,6 @@ public class Time
 	
 	public int getDuration()
 	{
-		setDuration();
 		return duration;
 	}
 	
@@ -85,46 +82,36 @@ public class Time
 	}
 	
 	//And here are the setters
-	public void setMinutes(int minutes) //sets the minutes for the start of class. If the minutes go to 60 or over adds and hour.
+	public void setMinutes(int minutes) throws IllegalArgumentException
 	{
-		Start_Minutes = minutes%60;
-		setHours(Start_Hours + minutes/60);
+		if(minutes<0 || minutes>59) throw new IllegalArgumentException("Invalid amount of minutes @ " + minutes);
+		Start_Minutes = minutes;
 	}
 	
-	public void setHours(int hours) //sets the hours for the start of class and checks to make sure the times are still valid.
+	public void setHours(int hours) throws IllegalArgumentException
 	{
-		Start_Hours = hours%24;
-		if(created) 
-		{
-			setStart();
-			setEnd();
-			setMeetTime();
-			setEndofClass();
-			validTimes();
-		}
+		if((hours==8 && Start_Minutes<30)|| hours>=21 || hours<8) throw new IllegalArgumentException("Invalid hour @ " + (hours*100 + Start_Minutes));
+		Start_Hours = hours;
+		setStart();
+		setEnd();
+		setMeetTime();
+		setEndofClass();
 	}
 	
 	
-	public void setDurationMinutes(int minutes)
+	public void setDurationMinutes(int minutes) throws IllegalArgumentException
 	{
-		Duration_Minutes = minutes%60;
-		setDurationHours(Duration_Hours + minutes/60);
+		if(minutes<0 || minutes>59) throw new IllegalArgumentException("Invalid amount of minutes @ " + minutes);
+		Duration_Minutes = minutes;
 	}
 	
-	public void setDurationHours(int hours)
+	public void setDurationHours(int hours) throws IllegalArgumentException
 	{
-		Duration_Hours = hours%24;
-		if(created) 
-		{
-			setEnd();
-			setEndofClass();
-			validTimes();
-		}
-	}
-	
-	private void setDuration()
-	{
-		duration = Duration_Hours*100 + Duration_Minutes;
+		if((Start_Hours + hours == 21 && Start_Minutes + Duration_Minutes > 0)|| (Start_Hours + hours > 21) || (Start_Hours + hours)%24 <= Start_Hours) 
+		throw new IllegalArgumentException("Invlaid hour @ " + Start_Hours + hours);
+		Duration_Hours = hours;
+		setEnd();
+		setEndofClass();
 	}
 	
 	private void setStart()
@@ -150,17 +137,17 @@ public class Time
 	/**
 	* Checks to make sure that the class is between 8:30 and 21:00
 	*
-	* I added the exception because Ryley did that in his course id. I don't know if you guys want it like that though?
+	* This method is not needed in this version.
 	*/
-	private void validTimes() throws IllegalArgumentException
-	{
+	//private void validTimes() throws IllegalArgumentException
+	//{
 		
-		if (Start_Time < 830 || Start_Time >= 2100 || End_Time > 2100 || End_Time <= 830 || End_Time <= Start_Time)
-		{ 
-			throw new IllegalArgumentException("The course times (" + Meet_Time + ", " + End_of_Class + ") do no fit between 08:30 and 21:00");
-		}		
-		return;
-	}
+		//if (Start_Time < 830 || Start_Time >= 2100 || End_Time > 2100 || End_Time <= 830 || End_Time <= Start_Time)
+		//{ 
+			//throw new IllegalArgumentException("The course times (" + Meet_Time + ", " + End_of_Class + ") do no fit between 08:30 and 21:00");
+		//}		
+		//return;
+	//}
 	
 	/**
 	* Checks if this time object's times overlap with another time object
