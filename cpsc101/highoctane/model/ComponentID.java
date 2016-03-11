@@ -3,8 +3,8 @@ package cpsc101.highoctane.model;
 /**
  * A courses type and its number
  * 
- * @author Ryley, Thomas
- * @version 1.00
+ * @author Ryley
+ * @version 0.02
  */
 public class ComponentID
 {
@@ -12,9 +12,6 @@ public class ComponentID
 	public static final char TUTORIAL_LETTER = 'T';
 	public static final char LAB_LETTER = 'L';
 	public static final char LECTURE_LETTER = 'A';
-	public static final char PRACTICUM_LETTER = 'P';
-	public static final char COMBINED_LETTER = 'C';
-	public static final char WEB_BASED_LETTER = 'Z';
 	
 	//member variables
 	String myComponent;
@@ -106,29 +103,6 @@ public class ComponentID
 		return myComponentLetter == TUTORIAL_LETTER;
 	}
 	
-	/**
-	 * @return true if this component has the PRACTICUM type
-	 */
-	public boolean isPracticum()
-	{
-		return myComponentLetter == PRACTICUM_LETTER;
-	}
-	
-	/**
-	 * @return true if this component has the COMBINED type
-	 */
-	public boolean isCombined()
-	{
-	    return myComponentLetter == COMBINED_LETTER;
-	}
-	
-	/**
-	 * @return true if this component has the WEB BASED type
-	 */
-	public boolean isWebBased()
-	{
-	    return myComponentLetter == WEB_BASED_LETTER;
-	}
 	/**
 	 * allows the object to be treated as a string
 	 * 
