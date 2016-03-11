@@ -1,83 +1,142 @@
 package cpsc101.highoctane.model;
 
 /**
- * The four letter ID and the associated three digit code
+ * A courses type and its number
  * 
- * @author Ryley
- * @version 0.02
+ * @author Ryley, Thomas
+ * @version 1.00
  */
-public class CourseID
+public class ComponentID
 {
-	private String myCourseID;
-	private String mySubjectCode;
-	private int myCourseNumber;
+	//Constants
+	public static final char TUTORIAL_LETTER = 'T';
+	public static final char LAB_LETTER = 'L';
+	public static final char LECTURE_LETTER = 'A';
+	public static final char PRACTICUM_LETTER = 'P';
+	public static final char COMBINED_LETTER = 'C';
+	public static final char WEB_BASED_LETTER = 'Z';
+	
+	//member variables
+	String myComponent;
+	char myComponentLetter;
+	int myComponentNumber;
 	
 	/**
-	 * creates a courseID.
-	 * has the precondition that there must be a four letter code and a three digit number
+	 * Creates a Component ID from a single string
+	 * has the precondition that the string has a single letter followed by a number
 	 * 
-	 * @param id The complete course ID
-	 * @throws IllegalArgumentException if the course ID is not 7 characters long
-	 * @throws NumberFormatException if the 5th to 7th letters are not numbers
+	 * @param id the complete component ID
+	 * @throws IllegalArgumentException
 	 */
-	public CourseID(String id) throws IllegalArgumentException
+	public ComponentID(String id) throws IllegalArgumentException
 	{
-		if(id.length() != 7)
-			throw new IllegalArgumentException("The CourseID "+id+" is not in the form of 4 letters and 3 numbers");
+		//makes sure the component letter is capitalized
+		myComponent = id.toUpperCase();
+		myComponentLetter = myComponent.charAt(0);
 		
-		myCourseID = id;
-		mySubjectCode = myCourseID.substring(0,4);
+		if(myComponentLetter <'A' || myComponentLetter >'Z')
+			throw new IllegalArgumentException("The ComponentID "+id+" Does not start with a letter");
+		
 		try{
-			myCourseNumber = Integer.parseInt(myCourseID.substring(4,7));
+			myComponentNumber = Integer.parseInt(myComponent.substring(1));
 		}catch(NumberFormatException _e){
-			throw new IllegalArgumentException("The CourseID "+id+" is not in the form of 4 letters and 3 numbers");
-			//makes it so both kinds of errors can be handled in the same way
+			throw new IllegalArgumentException("The ComponentID "+id+" is not in the form of a letter and a number");
+			//allows both errors to be handled in the same way
 		}
 	}
 	
 	/**
-	 * @return the complete courseID code
-	 */
-	public String getCourseID()
-	{
-		return myCourseID;
-	}
-	
-	/**
-	 * @return the four letter subject code for this courseID
-	 */
-	public String getSubject()
-	{
-		return mySubjectCode;
-	}
-	
-	/**
-	 * @return the three digit code for this courseID
-	 */
-	public int getCourseNumber()
-	{
-		return myCourseNumber;
-	}
-	
-	/**
-	 * checks if two course IDs are identical
+	 * Creates a Component ID from a type and a number
 	 * 
-	 * @param courseID the coureID object being compared
-	 * @return true if both courses have an identical ID
+	 * @param typeChar the component type
+	 * @param sectionNum the component number
 	 */
-	public boolean equals(CourseID other)
+	public ComponentID(char typeChar, int sectionNum)
 	{
-		return getCourseID().equalsIgnoreCase(other.getCourseID());
+		myComponent = ""+typeChar+sectionNum;
+		myComponentLetter = typeChar;
+		myComponentNumber = sectionNum;
 	}
 	
 	/**
-	 * Allows this object to be treated as a string
+	 * @return this components complete ID
+	 */
+	public String getComponentID()
+	{
+		return myComponent;
+	}
+	
+	/**
+	 * @return this component's type
+	 */
+	public char getComponentLetter()
+	{
+		return myComponentLetter;
+	}
+	
+	/**
+	 * @return this component's number
+	 */
+	public int getComponentNumber()
+	{
+		return myComponentNumber;
+	}
+	
+	/**
+	 * @return true if this component has the LAB type
+	 */
+	public boolean isLab()
+	{
+		return myComponentLetter == LAB_LETTER;
+	}
+	
+	/**
+	 * @return true if this component has the LECTURE type
+	 */
+	public boolean isLecture()
+	{
+		return myComponentLetter == LECTURE_LETTER;
+	}
+	
+	/**
+	 * @return true if this component has the TUTORIAL type
+	 */
+	public boolean isTutorial()
+	{
+		return myComponentLetter == TUTORIAL_LETTER;
+	}
+	
+	/**
+	 * @return true if this component has the PRACTICUM type
+	 */
+	public boolean isPracticum()
+	{
+		return myComponentLetter == PRACTICUM_LETTER;
+	}
+	
+	/**
+	 * @return true if this component has the COMBINED type
+	 */
+	public boolean isCombined()
+	{
+	    return myComponentLetter == COMBINED_LETTER;
+	}
+	
+	/**
+	 * @return true if this component has the WEB BASED type
+	 */
+	public boolean isWebBased()
+	{
+	    return myComponentLetter == WEB_BASED_LETTER;
+	}
+	/**
+	 * allows the object to be treated as a string
 	 * 
-	 * @return the entire course ID
+	 * @return the entire component ID
 	 */
 	@Override
 	public String toString()
 	{
-		return getCourseID();
+		return getComponentID();
 	}
 }
