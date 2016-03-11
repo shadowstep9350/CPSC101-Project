@@ -9,6 +9,7 @@ public class Meeting
 	private Professor meetingProf;
 	private RoomNumber meetingRoom;
 	private Date meetingDate;
+	private ArrayList<Meeting> allMeetings;
 	
 	public Meeting(String line)
 	{
@@ -46,11 +47,16 @@ public class Meeting
 		meetingProf = new Professor(info[12]);
 		meetingRoom = new RoomNumber(info[11]);
 		meetingDate = new Date(info[2],info[3]);
+		allMeetings.add();
 	}
 	
 	public void setType(String ID)
 	{
 		meetingType = new ComponentID(ID);
+	}
+	public ComponentID getType()
+	{
+		return meetingType;
 	}
 	
 	public void setCourse(String course)
@@ -58,9 +64,19 @@ public class Meeting
 		meetingCourse = new CourseID(course);
 	}
 	
+	public CourseID getCourse()
+	{
+		return meetingCourse;
+	}
+	
 	public void setDate(String start, String end)
 	{
 		meetingDate = new Date(start, end);
+	}
+	
+	public Date getDate()
+	{
+		return meetingDate;
 	}
 	
 	public void setDay(String day)
@@ -68,9 +84,19 @@ public class Meeting
 		meetingDay = DayOfWeek.fromString(day);
 	}
 	
+	public DayOfWeek getDay()
+	{
+		return meetingDay;
+	}
+	
 	public void setProf(String name)
 	{
 		meetingProf = new Professor(name);
+	}
+	
+	public Professor getProf()
+	{
+		return meetingProf;
 	}
 	
 	public void setRoom(String room)
@@ -78,11 +104,26 @@ public class Meeting
 		meetingRoom = new RoomNumber(room);
 	}
 	
+	public RoomNumber getRoom()
+	{
+		return meetingRoom;
+	}
+	
 	public void setTime(String start, String end)
 	{
 		String[] startTime = start.split(":");
 		String[] endTime = end.split(":");
 		meetingTime = new Time(Integer.parseInt(startTime[0]), Integer.parseInt(startTime[1]), Integer.parseInt(endTime[0]), Integer.parseInt(endTime[1]));
+	}
+	
+	public Time getTime()
+	{
+		return meetingTime;
+	}
+	
+	public ArrayList<Meeting> getAllMeetings()
+	{
+		return allMeetings;
 	}
 	
 	public void compareMeetings(Meeting m)
