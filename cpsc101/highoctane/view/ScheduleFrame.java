@@ -20,8 +20,8 @@ public class ScheduleFrame extends JFrame implements Savable, Loadable
 	public ScheduleFrame()
 	{
 		fileManager = new UNBCFileManager();
-		Savable configSaver = this;
-		Loadable configLoader = this;
+		final Savable configSaver = this;
+		final Loadable configLoader = this;
 		
 		//setting up the frame
 		setTitle("UNBC Schedule Viewer");
